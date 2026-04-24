@@ -1,23 +1,24 @@
 package com.example.demo2_new.Controller;
 
 import com.example.demo2_new.Model.Movies;
+import com.example.demo2_new.Repository.MovieRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/movies")
+@RequestMapping("/api/movies")
 public class MoviesController {
-    private MoviesRepository repository;
 
-    public MoviesController(MoviesRepository repository){
+    private final MovieRepository repository;
+
+    public MoviesController(MovieRepository repository){
         this.repository = repository;
     }
 
     @GetMapping
     public List<Movies> getAllMovies(){
         return repository.getAllMovies();
-
     }
 
     @PostMapping
@@ -26,7 +27,7 @@ public class MoviesController {
         return movies;
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Movies update(@PathVariable Long id, @RequestBody Movies movies){
         movies.setId(id);
         repository.updateMovie(movies);
@@ -37,6 +38,4 @@ public class MoviesController {
     public void deleteMovie(@PathVariable Long id){
         repository.deleteMovie(id);
     }
-
-
 }
