@@ -8,7 +8,7 @@ document.getElementById("loadMovies").addEventListener("click", async ()=> {
     data.forEach(movie => addMovieRow(movie))
 });
 
-// add movies dinamically to html
+// add movies dynamically to html
 function addMovieRow(movie){
     const row = document.createElement("tr")
     row.innerHTML = `
@@ -42,22 +42,23 @@ document.getElementById("addRow").addEventListener("click", () => {
     `
 
     moviesTable.append(row);
-    row.querySelector(".btn-save").addEventListener("click", () => saveRow())
+    row.querySelector(".btn-save").addEventListener("click", () => saveRow(row))
 })
 
 async function saveRow(row){
     const inputs = row.querySelectorAll("input");
-    const payload = {
+    const object = {
         name: inputs[0].value.trim(),
         age_limit: Number(inputs[1].value.trim()),
         type: inputs[2].value.trim(),
         director: inputs[3].value.trim(),
     };
 
+    //core to how frontend talks to Spring Boot backend, sends data from  browser →  Spring controller
     const response = await fetch("api/movies", {
         method: "POST",
-        headers: "{"Content-type": "application/json"}",
-        body: JSON.stringofy.body;
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
 
     })
 }

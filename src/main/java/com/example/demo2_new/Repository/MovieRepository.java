@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class MovieRepository {
     private final JdbcTemplate db;
@@ -23,12 +25,12 @@ public class MovieRepository {
 
             );
 
-    public void getAllMovies() {
+    public List<Movies> getAllMovies() {
         db.query("SELECT * FROM movies", moviesRowMapper);
     }
 
     public void addMovie(Movies movies) {
-        String sql = "INSERT INTO movies (name, age_limit, type, director) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO movies (name, age_limit, type, director) VALUES (?, ?, ?, ?, ?)";
         db.update(sql, movies.getName(), movies.getAge_limit(), movies.getType(), movies.getDirector());
     }
 
@@ -37,7 +39,7 @@ public class MovieRepository {
         db.update(sql, movies.getName(), movies.getAge_limit(), movies.getType(), movies.getDirector(), movies.getId(), movies.getId());
     }
 
-    public void deleteMovie(int id) {
+    public void deleteMovie(Long id) {
         db.update("DELETE FROM movies WHERE id=?", id);
     }
 }
