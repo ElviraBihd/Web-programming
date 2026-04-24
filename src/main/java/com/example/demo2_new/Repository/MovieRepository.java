@@ -26,7 +26,7 @@ public class MovieRepository {
             );
 
     public List<Movies> getAllMovies() {
-        db.query("SELECT * FROM movies", moviesRowMapper);
+        return db.query("SELECT * FROM movies", moviesRowMapper);
     }
 
     public void addMovie(Movies movies) {
@@ -36,7 +36,13 @@ public class MovieRepository {
 
     public void updateMovie(Movies movies) {
         String sql = "UPDATE movies SET name=?, age_limit=?, type=?, director=? WHERE id=?";
-        db.update(sql, movies.getName(), movies.getAge_limit(), movies.getType(), movies.getDirector(), movies.getId(), movies.getId());
+        db.update(sql,
+                movies.getName(),
+                movies.getAge_limit(),
+                movies.getType(),
+                movies.getDirector(),
+                movies.getId()
+        );
     }
 
     public void deleteMovie(Long id) {
